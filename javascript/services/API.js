@@ -5,8 +5,8 @@ class API {
         .then(resp => resp.json())
         .then(workouts => {
             workouts.forEach(workout => {
-                const{id, workout_name, date, completed, goal, rounds} = workout
-                new Workout(id, workout_name, date, completed, goal, rounds)
+                const{id, workout_name, workout_number, date, completed, goal, rounds} = workout
+                new Workout(id, workout_name, workout_number, date, completed, goal, rounds)
             })
         })
     }
