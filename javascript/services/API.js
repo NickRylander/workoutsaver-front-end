@@ -10,6 +10,30 @@ class API {
         })
     }
 
+    static addMove(e){
+        // debugger
+        e.preventDefault()
+        const moreMoves = document.getElementById('movementData')
+        const addFields = document.createElement('div')
+        addFields.classList.add = "move-data-cont"
+        addFields.innerHTML += API.moveFieldsHTML()
+        moreMoves.appendChild(addFields)
+    }
+
+    static moveFieldsHTML(){
+        return `
+            <label for="movement-name">Movement Name:</label>
+            <input type="text" name="movementName">
+        <br>
+            <label for="reps">Reps:</label>
+            <input type="text" name="reps">
+        <br>
+            <label for="weight">Weight:</label>
+            <input type="text" name="weight">
+        <br><br>
+        `
+    }
+
     static addWorkout(e){
         e.preventDefault()
         let data = {
