@@ -6,14 +6,12 @@ class Movement {
         this.weight = weight,
         this.workout_id = workout_id
         this.renderMovements()
-        // render the instance to page
     }
 
     renderMovements(){
-        const movementHolder = document.getElementById("workout-list").firstElementChild.firstElementChild
+        const movementHolder = document.getElementById(`${this.workout_id}`)
         const movementCont = document.createElement('ul')
-        movementCont.dataset.id = this.id
-        movementCont.id = this.id
+        movementCont.id = `movement-${this.id}`
         movementCont.classList.add = "movement-list-container"
         movementCont.innerHTML += this.movementHTML()
         movementHolder.appendChild(movementCont)

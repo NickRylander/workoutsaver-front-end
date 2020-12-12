@@ -1,5 +1,4 @@
 class API {
-    // static class level function that is a fetch request to the backend to the index that will load in all my workouts
     static addWorkouts(){
         fetch("http://localhost:3000/workouts")
         .then(resp => resp.json())
@@ -10,20 +9,9 @@ class API {
             })
         })
     }
-    static addMovements(){
-        fetch("http://localhost:3000/movements")
-        .then(resp => resp.json())
-        .then(movements => {
-            movements.forEach(movement => {
-                const{id, movement_name, reps, weight, workout_id} = movement
-                new Movement(id, movement_name, reps, weight, workout_id)
-            })
-        })
-    }
+
     static addWorkout(e){
-        debugger
         e.preventDefault()
-        // capture our form data
         let data = {
             'workout_name': e.target.workoutName.value,
             'workout_number': e.target.workoutNumber.value,
@@ -36,7 +24,6 @@ class API {
               'weight': e.target.weight.value
             }] 
         };
-        // write our fetch and send it to our back end
         fetch('http://localhost:3000/workouts', {
             method: 'POST',
             headers: {
@@ -44,15 +31,12 @@ class API {
             },
             body: JSON.stringify(data)
         })
-        // grab our fetch response
         .then(resp => resp.json())
         .then(workout => {
             const{id, workout_name, workout_number, completed, goal, rounds} = workout
             new Workout(id, workout_name, workout_number, completed, goal, rounds)
             document.getElementById('workout-form').reset()
         })
-        // create a new Workout object
-        // clear our form
     }
 
 }

@@ -3,35 +3,31 @@ class Workout {
         this.id = id,
         this.workout_name = workout_name,
         this.workout_number = workout_number,
-        // this.date = date,
         this.completed = completed,
         this.goal = goal,
         this.rounds = rounds
         this.renderWorkout()
-        // render the instance to page
     }
-    // render method that will create a li and append it to page, add relevant classes, ids, 
-    // possibly delegations, listeners, etc
 
     renderWorkout(){
         const workoutHolder = document.getElementById("workout-list")
         const workoutCont = document.createElement('div')
         workoutCont.dataset.id = this.id
-        // dataset makes it possible to work with a JS event as well
         workoutCont.id = this.id
-        workoutCont.classList.add = "workout-list-container"
+        workoutCont.classList.add("workout-list-container")
         workoutCont.innerHTML += this.workoutHTML()
         workoutHolder.appendChild(workoutCont)
         workoutCont.addEventListener("click", e => {
             if(e.target.className === "toggle") this.completeToggle(e)
             if(e.target.className.includes('delete')) this.deleteWorkout(e)
+            if(e.target.className.includes('workout-list-container')) this.showMovements(e)
         })
     }
 
     workoutHTML(){
         let completed = this.completed == true ? "checked" : ""
         return `
-        <h2 class="headline">${this.workout_name} - ${this.workout_number}</h2>
+        <h3 class="title">${this.workout_name} - Workout #${this.workout_number}</h3>
         <p>Workout Goal: ${this.goal}</p>
         <p>Rounds: ${this.rounds}</p>
         <p>Workout Completed: <input data-id="${this.id}" class="toggle" type="checkbox" value="completed" ${completed}</p><br><br>
@@ -62,27 +58,16 @@ class Workout {
         })
     }
 
-    createMovements(e){
-        // debugger
-        // find the show id from the dataset = e.target.dataset.id
-        let id = e.target.dataset.id
-        // fetch
-        fetch(`http://localhost:3000/workouts/${id}/movements`)
+    showMovements(e){
+        e.preventDefault()
+        let id = parseInt(e.target.dataset.id)
+        fetch(`http://localhost:3000/workouts/${id}/`)
         .then(resp => resp.json())
         .then(movements => {
-            movements.forEach(movement => {
+            movements["movements"].forEach(movement => {
                 const{id, movement_name, reps, weight, workout_id} = movement
-                // create our new associated muppet objects
                 new Movement(id, movement_name, reps, weight, workout_id)
             })
         })
     }
-    // showMovements(e){
-        // initiate fetch request to show page of workout, get scoped movements, or initiate a fetch request to the movement controller index method and scope it by the parameter (either way have to scope)
-        // return teh movements for the workout in question
-        // create new movement objects
-        // wipe everything off the page
-        // show the new movement objects
-        // have link to go "back" to the homepage
-    // }
 }
