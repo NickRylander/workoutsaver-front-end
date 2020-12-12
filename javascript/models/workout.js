@@ -1,9 +1,9 @@
 class Workout {
-    constructor(id, workout_name, workout_number, date, completed, goal, rounds){
+    constructor(id, workout_name, workout_number, completed, goal, rounds){
         this.id = id,
         this.workout_name = workout_name,
         this.workout_number = workout_number,
-        this.date = date,
+        // this.date = date,
         this.completed = completed,
         this.goal = goal,
         this.rounds = rounds
@@ -32,7 +32,6 @@ class Workout {
         let completed = this.completed == true ? "checked" : ""
         return `
         <h2 class="headline">${this.workout_name} - ${this.workout_number}</h2>
-        <h3>${this.date}</h3>
         <p>Workout Completed: <input data-id="${this.id}" class="toggle" type="checkbox" value="completed" ${completed}</p><br><br>
         <button class="delete">Delete Workout</button>
             `
@@ -61,6 +60,21 @@ class Workout {
         })
     }
 
+    createMovements(e){
+        // debugger
+        // find the show id from the dataset = e.target.dataset.id
+        let id = e.target.dataset.id
+        // fetch
+        fetch(`http://localhost:3000/workouts/${id}/movements`)
+        .then(resp => resp.json())
+        .then(movements => {
+            movements.forEach(movement => {
+                const{id, movement_name, reps, weight, workout_id} = movement
+                // create our new associated muppet objects
+                new Movement(id, movement_name, reps, weight, workout_id)
+            })
+        })
+    }
     // showMovements(e){
         // initiate fetch request to show page of workout, get scoped movements, or initiate a fetch request to the movement controller index method and scope it by the parameter (either way have to scope)
         // return teh movements for the workout in question

@@ -1,23 +1,22 @@
 class API {
     // static class level function that is a fetch request to the backend to the index that will load in all my workouts
-    static addMovements(){
+    static addWorkouts(){
         fetch("http://localhost:3000/workouts")
         .then(resp => resp.json())
         .then(workouts => {
             workouts.forEach(workout => {
-                const{id, workout_name, workout_number, date, completed, goal, rounds} = workout
-                new Workout(id, workout_name, workout_number, date, completed, goal, rounds)
+                const{id, workout_name, workout_number, completed, goal, rounds} = workout
+                new Workout(id, workout_name, workout_number, completed, goal, rounds)
             })
         })
     }
     static addWorkout(e){
-        // debugger
+        debugger
         e.preventDefault()
         // capture our form data
         let data = {
             'workout_name': e.target.workoutName.value,
             'workout_number': e.target.workoutNumber.value,
-            'date': e.target.date.value,
             'completed': e.target.completed.checked,
             'goal': e.target.goal.value,
             'rounds': e.target.rounds.value,
@@ -38,12 +37,24 @@ class API {
         // grab our fetch response
         .then(resp => resp.json())
         .then(workout => {
-            const{id, workout_name, workout_number, date, completed, goal, rounds} = workout
-            new Workout(id, workout_name, workout_number, date, completed, goal, rounds)
+            const{id, workout_name, workout_number, completed, goal, rounds} = workout
+            new Workout(id, workout_name, workout_number, completed, goal, rounds)
             document.getElementById('workout-form').reset()
         })
         // create a new Workout object
         // clear our form
       }
       // make sure all the functions still work
+
+      // static class level function that is a fetch request to the backend to the index that will load in all my workouts
+    // static addMovements(){
+    //     fetch("http://localhost:3000/movements")
+    //     .then(resp => resp.json())
+    //     .then(movements => {
+    //         movements.forEach(movement => {
+    //             const{id, movement_name, reps, weight, workout_id} = movement
+    //             new Movement(id, movement_name, reps, weight, workout_id)
+    //         })
+    //     })
+    // }
 }
