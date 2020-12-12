@@ -10,7 +10,7 @@ class Movement {
 
     renderMovements(){
         const movementHolder = document.getElementById(`${this.workout_id}`)
-        const movementCont = document.createElement('ul')
+        const movementCont = document.createElement('div')
         movementCont.id = `movement-${this.id}`
         movementCont.classList.add = "movement-list-container"
         movementCont.innerHTML += this.movementHTML()
