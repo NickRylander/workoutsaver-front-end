@@ -10,24 +10,18 @@ class Movement {
     }
 
     renderMovements(){
-        const movementHolder = document.getElementById("workout-list").firstElementChild
-        const movementCont = document.createElement('div')
+        const movementHolder = document.getElementById("workout-list").firstElementChild.firstElementChild
+        const movementCont = document.createElement('ul')
         movementCont.dataset.id = this.id
-        // dataset makes it possible to work with a JS event as well
         movementCont.id = this.id
         movementCont.classList.add = "movement-list-container"
         movementCont.innerHTML += this.movementHTML()
         movementHolder.appendChild(movementCont)
-    //     // movementCont.addEventListener("click", e => {
-    //     //     if(e.target.className === "toggle") this.completeToggle(e)
-    //     //     if(e.target.className.includes('delete')) this.deleteWorkout(e)
-    //     // })
     }
 
     movementHTML(){
         return `
-        <h4>${this.movement_name}</h4>
-        <p>${this.reps} - ${this.weight}</p>
+        <p>${this.movement_name}: ${this.reps} reps - ${this.weight} pounds</p>
         `
     }
 }

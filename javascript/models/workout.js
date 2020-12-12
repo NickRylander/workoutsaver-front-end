@@ -32,6 +32,8 @@ class Workout {
         let completed = this.completed == true ? "checked" : ""
         return `
         <h2 class="headline">${this.workout_name} - ${this.workout_number}</h2>
+        <p>Workout Goal: ${this.goal}</p>
+        <p>Rounds: ${this.rounds}</p>
         <p>Workout Completed: <input data-id="${this.id}" class="toggle" type="checkbox" value="completed" ${completed}</p><br><br>
         <button class="delete">Delete Workout</button>
             `

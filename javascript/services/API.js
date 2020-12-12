@@ -10,6 +10,16 @@ class API {
             })
         })
     }
+    static addMovements(){
+        fetch("http://localhost:3000/movements")
+        .then(resp => resp.json())
+        .then(movements => {
+            movements.forEach(movement => {
+                const{id, movement_name, reps, weight, workout_id} = movement
+                new Movement(id, movement_name, reps, weight, workout_id)
+            })
+        })
+    }
     static addWorkout(e){
         debugger
         e.preventDefault()
@@ -43,18 +53,6 @@ class API {
         })
         // create a new Workout object
         // clear our form
-      }
-      // make sure all the functions still work
+    }
 
-      // static class level function that is a fetch request to the backend to the index that will load in all my workouts
-    // static addMovements(){
-    //     fetch("http://localhost:3000/movements")
-    //     .then(resp => resp.json())
-    //     .then(movements => {
-    //         movements.forEach(movement => {
-    //             const{id, movement_name, reps, weight, workout_id} = movement
-    //             new Movement(id, movement_name, reps, weight, workout_id)
-    //         })
-    //     })
-    // }
 }
