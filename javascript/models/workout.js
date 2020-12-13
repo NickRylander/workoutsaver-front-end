@@ -17,11 +17,13 @@ class Workout {
         workoutCont.classList.add("workout-list-container")
         workoutCont.innerHTML += this.workoutHTML()
         workoutHolder.appendChild(workoutCont)
+        // debugger
         workoutCont.addEventListener("click", e => {
             if(e.target.className === "toggle") this.completeToggle(e)
             if(e.target.className.includes('delete')) this.deleteWorkout(e)
             if(e.target.className.includes('workout-list-container')) this.showMovements(e)
-        })
+            })
+        document.querySelector(`.movementForm${this.id}`).addEventListener('submit', API.addMovement)
     }
 
     workoutHTML(){
@@ -31,7 +33,23 @@ class Workout {
         <p>Workout Goal: ${this.goal}</p>
         <p>Rounds: ${this.rounds}</p>
         <p>Workout Completed: <input data-id="${this.id}" class="toggle" type="checkbox" value="completed" ${completed}</p><br><br>
-        <button class="delete">Delete Workout</button>
+        <button class="delete">Delete Workout</button><br><br>
+        <div id="moveForm">
+            <form class="movementForm${this.id}">
+                <label for="movement-name">Movement Name:</label>
+                    <input type="text" name="movementName">
+                <br>
+                    <label for="reps">Reps:</label>
+                    <input type="text" name="reps">
+                <br>
+                    <label for="weight">Weight:</label>
+                    <input type="text" name="weight">
+                <br>
+                    <input type="hidden" name=${this.id}/>
+                <br><br>
+                <input type="submit" value="Add Movement"></input><br><br>
+            </form>
+        </div>
             `
     }
 

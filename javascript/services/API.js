@@ -10,30 +10,6 @@ class API {
         })
     }
 
-    static addMove(e){
-        // debugger
-        e.preventDefault()
-        const moreMoves = document.getElementById('movementData')
-        const addFields = document.createElement('div')
-        addFields.classList.add = "move-data-cont"
-        addFields.innerHTML += API.moveFieldsHTML()
-        moreMoves.appendChild(addFields)
-    }
-
-    static moveFieldsHTML(){
-        return `
-            <label for="movement-name">Movement Name:</label>
-            <input type="text" name="movementName">
-        <br>
-            <label for="reps">Reps:</label>
-            <input type="text" name="reps">
-        <br>
-            <label for="weight">Weight:</label>
-            <input type="text" name="weight">
-        <br><br>
-        `
-    }
-
     static addWorkout(e){
         e.preventDefault()
         let data = {
@@ -41,13 +17,8 @@ class API {
             'workout_number': e.target.workoutNumber.value,
             'completed': e.target.completed.checked,
             'goal': e.target.goal.value,
-            'rounds': e.target.rounds.value,
-            'movements_attributes': [{
-              'movement_name': e.target.movementName.value,
-              'reps': e.target.reps.value,
-              'weight': e.target.weight.value
-            }] 
-        };
+            'rounds': e.target.rounds.value
+        }
         fetch('http://localhost:3000/workouts', {
             method: 'POST',
             headers: {
@@ -63,4 +34,40 @@ class API {
         })
     }
 
+    static addMovements(){
+        fetch("http://localhost:3000/movements")
+        .then(resp => resp.json())
+        .then(movements => {
+            movements.forEach(movement => {
+                const{id, movement_name, reps, weight, workout_id} = movement
+                new Movement(id, movement_name, reps, weight, workout_id)
+            })
+        })
+    }
+
+    static addMovement(e){
+        debugger
+        e.preventDefault()
+        const workId = parseInt(e.target.parentElement.parentElement.id)
+        let data = {
+              'movement_name': e.target.movementName.value,
+              'reps': e.target.reps.value,
+              'weight': e.target.weight.value,
+              'workout_id': workId
+        };
+        fetch("http://localhost:3000/movements",{
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(resp => resp.json())
+        .then(movement => {
+            const{id, movement_name, reps, weight, workout_id} = movement
+            const moving = new Movement(id, movement_name, reps, weight, workout_id)
+            debugger
+            document.querySelector(`.movementForm${workId}`).reset()
+        })
+    }
 }
