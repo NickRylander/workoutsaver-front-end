@@ -1,6 +1,6 @@
 class Movement {
     constructor(id, movement_name, reps, weight, workout_id){
-        this.id= id,
+        this.id = id,
         this.movement_name = movement_name,
         this.reps = reps,
         this.weight = weight,
